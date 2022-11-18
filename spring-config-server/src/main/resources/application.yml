@@ -16,8 +16,10 @@ spring:
     config:
       server:
         git: #local git
-          uri: file:///D:/Projects/Law/working/workspace/spring-cloud/config
-
+          uri: https://github.com/KIM-JONG-YOUNG/spring-cloud
+          search-paths: config # Folder 명
+          default-label: master # Branch 정보
+          delete-untracked-branches: true # Remote Repository만 사용
 ---
 # Local File
 spring:
