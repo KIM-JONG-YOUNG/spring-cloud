@@ -3,31 +3,31 @@ server:
 spring:
   application:
     name: config-service
-  profiles: #그냥 로컬 파일
-    active: git
+  profiles: 
+    active: native
 
 ---
-# Local GIT
+# GIT
 spring:
   config:
     activate:
-      on-profile: git
+      on-profile: git # Profile명 지정
   cloud:
     config:
       server:
-        git: #local git
+        git: 
           uri: https://github.com/KIM-JONG-YOUNG/spring-cloud
-          search-paths: config # Folder 명
-          default-label: master # Branch 정보
-          delete-untracked-branches: true # Remote Repository만 사용
+          search-paths: spring-config-server/config                # Folder 명
+          default-label: master                                                    # Branch 정보
+          delete-untracked-branches: true                                # Remote Repository만 사용
 ---
 # Local File
 spring:
   config:
     activate:
-      on-profile: native
+      on-profile: native # Profile명 지정
   cloud:
     config:
       server:
         native:
-          search-locations:  file:///D:/Projects/Law/working/workspace/spring-cloud/config
+          search-locations:  file:./config
