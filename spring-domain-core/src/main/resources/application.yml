@@ -1,0 +1,9 @@
+spring:
+#  spring.application.name 미설정 시 application-{spring.profile.active}.yml 설정을 가져옴
+#  spring.application.name 설정 시 {spring.application.name}-{spring.profile.active}.yml 설정을 가져옴
+#  application:
+#    name: domain-core
+  profiles:
+    active: db
+  config:
+    import: optional:configserver:http://127.0.0.1:8888
