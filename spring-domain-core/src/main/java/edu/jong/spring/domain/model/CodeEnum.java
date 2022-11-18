@@ -20,10 +20,9 @@ public interface CodeEnum<C> {
 		@Override
 		public V convertToDatabaseColumn(E attribute) {
 
-			if (!this.nullable && attribute == null) {
+			if (!this.nullable && attribute == null) 
 				throw new IllegalArgumentException(
 						String.format("%s를 DB에 Null로 저장할 수 없습니다.", this.enumType.getSimpleName()));
-			}
 			
 			return (attribute == null) ? null : attribute.getCode();
 		}
@@ -31,10 +30,9 @@ public interface CodeEnum<C> {
 		@Override
 		public E convertToEntityAttribute(V dbData) {
 
-			if (!this.nullable && dbData == null) {
+			if (!this.nullable && dbData == null) 
 				throw new IllegalArgumentException(
 						String.format("%s가 DB에 Null로 저장되어 있습니다.", this.enumType.getSimpleName()));
-			}
 			
 			Optional<E> enumProp = EnumSet.allOf(enumType).stream()
 					.filter(x -> x.getCode().equals(dbData)).findAny();

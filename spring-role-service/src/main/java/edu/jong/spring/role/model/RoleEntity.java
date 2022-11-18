@@ -8,9 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import edu.jong.spring.domain.model.BaseEntity;
+import edu.jong.spring.role.validate.AntPattern;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,6 +33,7 @@ public class RoleEntity extends BaseEntity {
 
 	@NotNull
 	@Size(max = 30)
+	@Pattern(regexp = "^ROLE_[A-Z]+")
 	@Column(unique = true)
 	private String name;
 
@@ -42,6 +45,7 @@ public class RoleEntity extends BaseEntity {
 	@Setter
 	@NotNull
 	@Size(max = 60)
+	@AntPattern
 	private String accessibleUrlPattern;
 
 	@Builder

@@ -1,2 +1,8 @@
 server:
   port: 8001
+
+springdoc:
+  title: Role API Document
+  version: 1.0.0
+  swagger-ui:
+    path: /roles/api-docs

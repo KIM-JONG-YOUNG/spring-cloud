@@ -13,7 +13,7 @@ import edu.jong.spring.role.model.RoleEntity;
 import edu.jong.spring.role.model.RoleModifyParam;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, 
-					unmappedTargetPolicy = ReportingPolicy.IGNORE)
+		unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface RoleMapper {
 
 	RoleEntity toEntity(RoleAddParam param);
