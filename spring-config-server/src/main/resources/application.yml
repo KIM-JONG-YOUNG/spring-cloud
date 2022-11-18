@@ -1,0 +1,31 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: config-service
+  profiles: #그냥 로컬 파일
+    active: git
+
+---
+# Local GIT
+spring:
+  config:
+    activate:
+      on-profile: git
+  cloud:
+    config:
+      server:
+        git: #local git
+          uri: file:///D:/Projects/Law/working/workspace/spring-cloud/config
+
+---
+# Local File
+spring:
+  config:
+    activate:
+      on-profile: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations:  file:///D:/Projects/Law/working/workspace/spring-cloud/config
