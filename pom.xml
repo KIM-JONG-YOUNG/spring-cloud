@@ -16,10 +16,14 @@
 		<module>spring-domain-core</module>
 		<module>spring-role-service</module>
 		<module>spring-swagger-service</module>
+		<module>spring-member-service</module>
 	</modules>
 
 	<properties>
 		<java.version>1.8</java.version>
+		<mapstruct.version>1.5.2.Final</mapstruct.version>
+		<spring-cloud.version>2021.0.5</spring-cloud.version>
+		<openapi.ui.version>1.6.11</openapi.ui.version>
 	</properties>
 
 	<dependencies>

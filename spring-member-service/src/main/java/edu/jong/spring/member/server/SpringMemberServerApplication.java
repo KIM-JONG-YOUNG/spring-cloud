@@ -1,4 +1,4 @@
-package edu.jong.spring.role.server;
+package edu.jong.spring.member.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,9 +6,9 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "edu.jong.spring")
-public class SpringRoleServerApplication {
+public class SpringMemberServerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringRoleServerApplication.class, args);
+		SpringApplication.run(SpringMemberServerApplication.class, args);
 	}
 }

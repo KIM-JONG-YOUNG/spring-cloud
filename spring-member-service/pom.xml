@@ -7,7 +7,7 @@
 		<artifactId>spring-cloud</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>spring-role-service</artifactId>
+	<artifactId>spring-member-service</artifactId>
 
 	<dependencies>
 		<dependency>
@@ -34,7 +34,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -50,7 +54,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -96,5 +100,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>

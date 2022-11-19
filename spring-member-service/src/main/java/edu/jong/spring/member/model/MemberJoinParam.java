@@ -1,11 +1,10 @@
-package edu.jong.spring.role.model;
+package edu.jong.spring.member.model;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import edu.jong.spring.role.validate.AntPattern;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,19 +17,25 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class RoleAddParam {
+public class MemberJoinParam {
 
 	@NotBlank
-	@Pattern(regexp = "^ROLE_[A-Z]+")
 	@Size(max = 30)
-	private String name;
-
-	@NotNull
-	private APIMethod accessibleMethod;
+	private String username;
 	
 	@NotBlank
-	@AntPattern
+	private String password;
+	
+	@NotBlank
+	@Size(max = 30)
+	private String name;
+	
+	@NotNull
+	private Gender gender;
+	
+	@NotBlank
 	@Size(max = 60)
-	private String accessibleUrlPattern;
+	@Email
+	private String email;
 
 }

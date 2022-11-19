@@ -13,7 +13,7 @@ public enum APIMethod implements CodeEnum<String> {
 	ALL("ALL"),
 	GET("GET"),
 	PUT("PUT"),
-	DELETE("DELETE"),
+	DELETE("DEL"),
 	POST("POST");
 	
 	private final String code;
