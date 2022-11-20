@@ -1,0 +1,23 @@
+server:
+  port: 8000
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: role-service
+          uri: http://localhost:8001
+          predicates:
+            - Path=/roles/**
+#        - id: member-service
+#          uri: http://localhost:8002
+#          predicates:
+#            - Path=/members/**
+            
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8100/eureka/
+    

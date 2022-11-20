@@ -14,9 +14,13 @@
 	<modules>
 		<module>spring-config-server</module>
 		<module>spring-domain-core</module>
-		<module>spring-role-service</module>
+		<module>spring-role-server</module>
 		<module>spring-swagger-service</module>
-		<module>spring-member-service</module>
+		<module>spring-member-server</module>
+		<module>spring-discovery-server</module>
+		<module>spring-gateway-server</module>
+		<module>spring-member-client</module>
+		<module>spring-role-client</module>
 	</modules>
 
 	<properties>

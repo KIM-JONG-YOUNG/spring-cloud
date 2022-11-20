@@ -4,9 +4,11 @@ spring:
   application:
     name: config-service
   profiles: 
-    active: native
+    active: 
+    - native
 
 ---
+
 # GIT
 spring:
   config:
@@ -18,9 +20,11 @@ spring:
         git: 
           uri: https://github.com/KIM-JONG-YOUNG/spring-cloud
           search-paths: spring-config-server/config                # Folder 명
-          default-label: master                                                    # Branch 정보
-          delete-untracked-branches: true                                # Remote Repository만 사용
+          default-label: master                                    # Branch 정보
+          delete-untracked-branches: true                          # Remote Repository만 사용
+
 ---
+
 # Local File
 spring:
   config:
