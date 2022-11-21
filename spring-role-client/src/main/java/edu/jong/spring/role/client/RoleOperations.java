@@ -22,41 +22,41 @@ import edu.jong.spring.role.response.RoleDetails;
 public interface RoleOperations {
 
 	@PostMapping(
-			value = APIUrls.ROLE_API_PREFIX,
+			value = APIUrls.ROLES,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<Void> add(
 			@RequestBody RoleAddParam param);
 	
 	@PutMapping(
-			value = APIUrls.ROLE_API_PREFIX + "/{no}", 
+			value = APIUrls.ROLES + "/{no}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<Void> modify(
 			@PathVariable("no") long no,
 			@RequestBody RoleModifyParam param);
 
-	@PostMapping(value = APIUrls.ROLE_API_PREFIX + "/{no}")
+	@PostMapping(value = APIUrls.ROLES + "/{no}")
 	ResponseEntity<Void> restore(
 			@PathVariable("no") long no);
 
-	@DeleteMapping(value = APIUrls.ROLE_API_PREFIX + "/{no}")
+	@DeleteMapping(value = APIUrls.ROLES + "/{no}")
 	ResponseEntity<Void> remove(
 			@PathVariable("no") long no);
 
-	@GetMapping(value = APIUrls.ROLE_API_PREFIX + "/{no}")
+	@GetMapping(value = APIUrls.ROLES + "/{no}")
 	ResponseEntity<RoleDetails> get(
 			@PathVariable("no") long no);
 
-	@GetMapping(value = APIUrls.ROLE_API_PREFIX)
+	@GetMapping(value = APIUrls.ROLES)
 	ResponseEntity<List<RoleDetails>> list();
  
-	@PostMapping(value = APIUrls.ROLE_API_PREFIX + "/{roleNo}/grant/{memberNo}")
+	@PostMapping(value = APIUrls.ROLES + "/{roleNo}/grant/{memberNo}")
 	ResponseEntity<Void> grant(
 			@PathVariable("roleNo") long roleNo,
 			@PathVariable("memberNo") long memberNo);
 	
-	@DeleteMapping(value = APIUrls.ROLE_API_PREFIX + "/{roleNo}/revoke/{memberNo}")
+	@DeleteMapping(value = APIUrls.ROLES + "/{roleNo}/revoke/{memberNo}")
 	ResponseEntity<Void> revoke(
 			@PathVariable("roleNo") long roleNo,
 			@PathVariable("memberNo") long memberNo);

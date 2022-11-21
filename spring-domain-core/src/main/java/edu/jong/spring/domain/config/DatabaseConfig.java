@@ -16,11 +16,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import edu.jong.spring.common.constants.Packages;
+
 @Configuration
 @EnableJpaAuditing
 @EnableTransactionManagement
-@EntityScan(basePackages = "edu.jong.spring")
-@EnableJpaRepositories(basePackages = "edu.jong.spring")
+@EntityScan(basePackages = Packages.ROOT)
+@EnableJpaRepositories(basePackages = Packages.ROOT)
 public class DatabaseConfig {
 
 	@Bean  

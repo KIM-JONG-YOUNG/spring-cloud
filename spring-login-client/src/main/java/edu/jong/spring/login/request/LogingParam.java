@@ -1,4 +1,4 @@
-package edu.jong.spring.login.model;
+package edu.jong.spring.login.request;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,9 +12,8 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class SessionTokens {
+public class LogingParam {
 
-	private String accessToken;
-	private String refreshToken;
-	
+	private String username;
+	private String password;
 }

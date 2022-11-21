@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import edu.jong.spring.common.constants.Patterns;
 import edu.jong.spring.common.constants.TableNames;
 import edu.jong.spring.domain.converter.AbstractAttributeConverter;
 import edu.jong.spring.domain.entity.BaseEntity;
@@ -36,7 +37,7 @@ public class RoleEntity extends BaseEntity {
 	private long no;
 
 	@NotNull
-	@Pattern(regexp = "^ROLE_[A-Z]+")
+	@Pattern(regexp = Patterns.ROLE_NAME)
 	@Size(max = 30)
 	@Column(unique = true)
 	private String name;

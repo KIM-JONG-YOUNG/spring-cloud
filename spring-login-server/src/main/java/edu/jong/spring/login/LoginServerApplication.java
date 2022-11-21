@@ -14,9 +14,11 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import edu.jong.spring.common.constants.Packages;
+
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "edu.jong.spring")
-@SpringBootApplication(scanBasePackages = "edu.jong.spring")
+@EnableFeignClients(basePackages = Packages.ROOT)
+@SpringBootApplication(scanBasePackages = Packages.ROOT)
 public class LoginServerApplication {
 
 	public static void main(String[] args) {

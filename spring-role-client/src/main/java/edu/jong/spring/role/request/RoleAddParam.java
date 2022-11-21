@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import edu.jong.spring.common.constants.Patterns;
 import edu.jong.spring.role.enums.APIMethod;
 import edu.jong.spring.role.validate.AntPattern;
 import lombok.AccessLevel;
@@ -22,7 +23,7 @@ import lombok.ToString;
 public class RoleAddParam {
 
 	@NotBlank
-	@Pattern(regexp = "^ROLE_[A-Z]+")
+	@Pattern(regexp = Patterns.ROLE_NAME)
 	@Size(max = 30)
 	private String name;
 

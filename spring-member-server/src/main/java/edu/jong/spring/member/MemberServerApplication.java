@@ -9,11 +9,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import edu.jong.spring.common.constants.PackagePaths;
+import edu.jong.spring.common.constants.Packages;
 
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = PackagePaths.ROOT_PATH)
-@SpringBootApplication(scanBasePackages = PackagePaths.ROOT_PATH)
+@EnableFeignClients(basePackages = Packages.ROOT)
+@SpringBootApplication(scanBasePackages = Packages.ROOT)
 public class MemberServerApplication {
 
 	public static void main(String[] args) {

@@ -9,15 +9,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-import edu.jong.spring.login.model.LogingParam;
-import edu.jong.spring.login.model.SessionTokens;
+import edu.jong.spring.common.constants.HeaderNames;
+import edu.jong.spring.common.constants.ServiceNames;
+import edu.jong.spring.login.request.LogingParam;
+import edu.jong.spring.login.response.SessionTokens;
 
-@FeignClient("login-service")
+@FeignClient(ServiceNames.LOGIN_SERVICE)
 public interface LoginOperations {
 
-	public static final String AUTH_TOKEN_HEADER_NAME = "Authorization-Token";
-	public static final String REFRESH_TOKEN_HEADER_NAME = "Refresh-Token";
-	
 	@PostMapping(value = "/login",
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -26,16 +25,16 @@ public interface LoginOperations {
 	
 	@PostMapping(value = "/logout")
 	ResponseEntity<Void> logout(
-			@RequestHeader(AUTH_TOKEN_HEADER_NAME) String accessToken);
+			@RequestHeader(HeaderNames.AUTH_TOKEN) String accessToken);
 	
 	@GetMapping(value = "/check")
 	ResponseEntity<Void> check(
-			@RequestHeader(AUTH_TOKEN_HEADER_NAME) String accessToken,
-			@RequestHeader(HttpHeaders.ORIGIN) String accessUrl);
+			@RequestHeader(HeaderNames.AUTH_TOKEN) String accessToken,
+			@RequestHeader(HeaderNames.ACCESSIBLE_URL) String accessUrl);
 
 	@PostMapping(value = "/refresh")
 	ResponseEntity<SessionTokens> refresh(
-			@RequestHeader(AUTH_TOKEN_HEADER_NAME) String accessToken,
-			@RequestHeader(REFRESH_TOKEN_HEADER_NAME) String refreshToken);
+			@RequestHeader(HeaderNames.AUTH_TOKEN) String accessToken,
+			@RequestHeader(HeaderNames.REFRESH_TOKEN) String refreshToken);
 
 }
