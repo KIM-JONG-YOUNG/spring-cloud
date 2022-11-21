@@ -50,10 +50,40 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- Jwt -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>${jjwt.version}</version>
+		</dependency>
 		<!-- 공통 라이브러리 -->
 		<dependency>
 			<groupId>edu.jong</groupId>
 			<artifactId>spring-cloud-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- Redis Core -->
+		<dependency>
+			<groupId>edu.jong</groupId>
+			<artifactId>spring-redis-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- 로그인 API Client -->
+		<dependency>
+			<groupId>edu.jong</groupId>
+			<artifactId>spring-login-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- 사용자 API Client -->
+		<dependency>
+			<groupId>edu.jong</groupId>
+			<artifactId>spring-member-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- 권한 API Client -->
+		<dependency>
+			<groupId>edu.jong</groupId>
+			<artifactId>spring-role-client</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

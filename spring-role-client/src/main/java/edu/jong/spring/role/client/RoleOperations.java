@@ -25,20 +25,16 @@ public interface RoleOperations {
 			value = APIUrls.ROLES,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<Void> add(
+	ResponseEntity<RoleDetails> add(
 			@RequestBody RoleAddParam param);
 	
 	@PutMapping(
 			value = APIUrls.ROLES + "/{no}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<Void> modify(
+	ResponseEntity<RoleDetails> modify(
 			@PathVariable("no") long no,
 			@RequestBody RoleModifyParam param);
-
-	@PostMapping(value = APIUrls.ROLES + "/{no}")
-	ResponseEntity<Void> restore(
-			@PathVariable("no") long no);
 
 	@DeleteMapping(value = APIUrls.ROLES + "/{no}")
 	ResponseEntity<Void> remove(
@@ -52,13 +48,22 @@ public interface RoleOperations {
 	ResponseEntity<List<RoleDetails>> list();
  
 	@PostMapping(value = APIUrls.ROLES + "/{roleNo}/grant/{memberNo}")
-	ResponseEntity<Void> grant(
+	ResponseEntity<Void> grantToMember(
 			@PathVariable("roleNo") long roleNo,
 			@PathVariable("memberNo") long memberNo);
 	
 	@DeleteMapping(value = APIUrls.ROLES + "/{roleNo}/revoke/{memberNo}")
-	ResponseEntity<Void> revoke(
+	ResponseEntity<Void> revokeToMember(
 			@PathVariable("roleNo") long roleNo,
 			@PathVariable("memberNo") long memberNo);
+
+	@DeleteMapping(value = APIUrls.ROLES + "/revokeAll/{memberNo}")
+	ResponseEntity<Void> revokeAllToMember(
+			@PathVariable("memberNo") long memberNo);
+
+	@GetMapping(value = APIUrls.ROLES + "/grant/{memberNo}")
+	ResponseEntity<List<RoleDetails>> getAllByMember(
+			@PathVariable("memberNo") long memberNo);
+
 	
 }

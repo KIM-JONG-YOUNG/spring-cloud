@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import edu.jong.spring.common.constants.APIUrls;
 import edu.jong.spring.common.constants.ServiceNames;
 import edu.jong.spring.member.request.MemberJoinParam;
 import edu.jong.spring.member.request.MemberModifyParam;
@@ -18,38 +19,32 @@ import edu.jong.spring.member.response.MemberDetails;
 @FeignClient(name = ServiceNames.MEMBER_SERVICE)
 public interface MemberOperations {
 
-	public static final String CONTEXT_PATH = "/members";
-	
-	@PostMapping(value= CONTEXT_PATH, 
+	@PostMapping(value= APIUrls.MEMBERS, 
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<Void> join(
+	ResponseEntity<MemberDetails> join(
 			@RequestBody MemberJoinParam param);
 
-	@PutMapping(value = CONTEXT_PATH + "/{no}", 
+	@PutMapping(value = APIUrls.MEMBERS + "/{no}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<Void> modify(
+	ResponseEntity<MemberDetails> modify(
 			@PathVariable long no,
 			@RequestBody MemberModifyParam param);
 
-	@PostMapping(value = CONTEXT_PATH + "/{no}")
-	ResponseEntity<Void> restore(
-			@PathVariable long no);
-
-	@DeleteMapping(value = CONTEXT_PATH + "/{no}")
+	@DeleteMapping(value = APIUrls.MEMBERS + "/{no}")
 	ResponseEntity<Void> remove(
 			@PathVariable long no);
 
-	@GetMapping(value = CONTEXT_PATH + "/{no}")
+	@GetMapping(value = APIUrls.MEMBERS + "/{no}")
 	ResponseEntity<MemberDetails> get(
 			@PathVariable long no);
 
-	@GetMapping(value = CONTEXT_PATH + "/username/{username}")
+	@GetMapping(value = APIUrls.MEMBERS + "/username/{username}")
 	ResponseEntity<MemberDetails> get(
 			@PathVariable String username);
 
-	@GetMapping(value = CONTEXT_PATH)
+	@GetMapping(value = APIUrls.MEMBERS)
 	ResponseEntity<Void> list();
 
 }

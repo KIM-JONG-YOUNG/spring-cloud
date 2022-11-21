@@ -2,7 +2,6 @@ package edu.jong.spring.role.response;
 
 import java.time.LocalDateTime;
 
-import edu.jong.spring.common.enums.DataState;
 import edu.jong.spring.role.enums.APIMethod;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -25,6 +24,5 @@ public class RoleDetails {
 
 	private LocalDateTime createDateTime;
 	private LocalDateTime lastUpdateDateTime;
-	private DataState dataState;
 	
 }

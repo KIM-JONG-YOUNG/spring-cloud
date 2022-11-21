@@ -1,5 +1,7 @@
 package edu.jong.spring.role.service;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -12,18 +14,19 @@ import edu.jong.spring.role.response.RoleDetails;
 @Validated
 public interface RoleService {
 
-	long add(@NotNull @Valid RoleAddParam param);
+	RoleDetails add(@NotNull @Valid RoleAddParam param);
 	
-	long modify(long no,@NotNull @Valid RoleModifyParam param);
+	RoleDetails modify(long no,@NotNull @Valid RoleModifyParam param);
 	
-	long restore(long no);
-
-	long remove(long no);
+	void remove(long no);
 
 	RoleDetails get(long no);
 
-	void grant(long roleNo, long memberNo);
+	void grantToMember(long roleNo, long memberNo);
 
-	void revoke(long roleNo, long memberNo);
+	void revokeToMember(long roleNo, long memberNo);
 
+	void revokeAllToMember(long memberNo);
+
+	List<RoleDetails> getAllByMember(long memberNo);
 }

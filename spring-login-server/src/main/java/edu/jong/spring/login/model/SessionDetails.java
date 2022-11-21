@@ -23,6 +23,7 @@ public class SessionDetails implements UserDetails, CredentialsContainer {
 
 	private static final long serialVersionUID = 1L;
 
+	private long no;
 	private String username;
 	private String password;
 

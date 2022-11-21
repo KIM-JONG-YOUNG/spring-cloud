@@ -1,15 +1,24 @@
 package edu.jong.spring.role.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.jong.spring.common.enums.DataState;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+
+import edu.jong.spring.common.constants.CacheNames;
 import edu.jong.spring.member.client.MemberOperations;
 import edu.jong.spring.member.response.MemberDetails;
+import edu.jong.spring.redis.service.RedisService;
 import edu.jong.spring.role.entity.GrantedRoleEntity;
+import edu.jong.spring.role.entity.QGrantedRoleEntity;
+import edu.jong.spring.role.entity.QRoleEntity;
 import edu.jong.spring.role.entity.RoleEntity;
 import edu.jong.spring.role.repository.GrantedRoleRepository;
 import edu.jong.spring.role.repository.RoleRepository;
@@ -26,67 +35,71 @@ public class RoleServiceImpl implements RoleService {
 	private final RoleRepository roleRepository;
 	private final GrantedRoleRepository grantedRoleRepository;
 	private final MemberOperations memberOperations;
+	private final RedisService redisService;
+	
+	private final JPAQueryFactory jpaQueryFactory;
+	private final QGrantedRoleEntity grantedRole;
+	private final QRoleEntity role;
+	
+	private RoleDetails caching(RoleDetails details) {
+		
+		String cachingKey = CacheNames.ROLE + details.getNo();
+		redisService.caching(cachingKey, details, 60);
+		
+		return details;
+	}
 	
 	@Transactional
 	@Override
-	public long add(RoleAddParam param) {
+	public RoleDetails add(RoleAddParam param) {
 
 		if (roleRepository.existsByName(param.getName()))
 			throw new EntityExistsException("동일한 권한명이 존재합니다.");
-		RoleEntity role = roleRepository.save(mapper.toEntity(param));
 
-		return role.getNo();
+		RoleEntity savedRole = roleRepository.save(mapper.toEntity(param));
+
+		return caching(mapper.toDetails(savedRole));
 	}
 
 	@Transactional
 	@Override
-	public long modify(long no, RoleModifyParam param) {
+	public RoleDetails modify(long no, RoleModifyParam param) {
 		
 		RoleEntity role = roleRepository.findByIdForUpdate(no)
 				.orElseThrow(() -> new EntityNotFoundException("권한이 존재하지 않습니다."));
-		roleRepository.save(mapper.updateEntity(param, role));
+		RoleEntity savedRole = roleRepository.save(mapper.updateEntity(param, role));
 		
-		return role.getNo();
+		return caching(mapper.toDetails(savedRole));
 	}
 
 	@Transactional
 	@Override
-	public long restore(long no) {
+	public void remove(long no) {
 		
-		RoleEntity role = roleRepository.findByIdForUpdate(no)
-				.orElseThrow(() -> new EntityNotFoundException("권한이 존재하지 않습니다."));
-		role.setDataState(DataState.ACTIVE);
-		roleRepository.save(role);
+		roleRepository.delete(roleRepository.findByIdForUpdate(no)
+				.orElseThrow(() -> new EntityNotFoundException("권한이 존재하지 않습니다.")));
 		
-		return role.getNo();
-	}
-
-	@Transactional
-	@Override
-	public long remove(long no) {
+		grantedRoleRepository.deleteAll(
+				grantedRoleRepository.findAllByRoleNoForUpdate(no));
 		
-		RoleEntity role = roleRepository.findByIdForUpdate(no)
-				.orElseThrow(() -> new EntityNotFoundException("권한이 존재하지 않습니다."));
-		role.setDataState(DataState.DEACTIVE);
-		roleRepository.save(role);
-		
-		return role.getNo();
-
+		redisService.remove(CacheNames.ROLE + no);
 	}
 
 	@Transactional(readOnly = true)
 	@Override
 	public RoleDetails get(long no) {
 		
-		RoleEntity role = roleRepository.findById(no)
-				.orElseThrow(() -> new EntityNotFoundException("권한이 존재하지 않습니다."));
-		
-		return mapper.toDetails(role);
+		String cachingKey = CacheNames.ROLE + no;
+		RoleDetails details = redisService.get(cachingKey, new TypeReference<RoleDetails>() {})
+				.orElse(mapper.toDetails(roleRepository.findById(no)
+				.orElseThrow(() -> new EntityNotFoundException("권한이 존재하지 않습니다."))));
+
+		return caching(details);
 	}
 
 	@Transactional
 	@Override
-	public void grant(long roleNo, long memberNo) {
+	public void grantToMember(long roleNo, long memberNo) {
 
 		RoleEntity role = roleRepository.findByIdForUpdate(roleNo)
 				.orElseThrow(() -> new EntityNotFoundException("권한이 존재하지 않습니다."));
@@ -103,10 +116,36 @@ public class RoleServiceImpl implements RoleService {
 
 	@Transactional
 	@Override
-	public void revoke(long roleNo, long memberNo) {
-		grantedRoleRepository.delete(
-				grantedRoleRepository.findByIdForUpdate(roleNo, memberNo)
-					.orElseThrow(() -> new EntityNotFoundException("부여된 권한이 존재하지 않습니다.")));
+	public void revokeToMember(long roleNo, long memberNo) {
+		grantedRoleRepository.delete(grantedRoleRepository.findByIdForUpdate(roleNo, memberNo)
+				.orElseThrow(() -> new EntityNotFoundException("부여된 권한이 존재하지 않습니다.")));
+	}
+
+	@Transactional
+	@Override
+	public void revokeAllToMember(long memberNo) {
+		grantedRoleRepository.deleteAll(
+				grantedRoleRepository.findAllByMemberNoForUpdate(memberNo));
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<RoleDetails> getAllByMember(long memberNo) {
+		TypeReference<List<RoleDetails>> type = new TypeReference<List<RoleDetails>>() {};
+		return redisService.get(CacheNames.GRANTED_ROLE + memberNo, type)
+			.orElseGet(() -> {
+				
+				List<RoleEntity> roleList = jpaQueryFactory.select(role)
+						.from(grantedRole)
+						.join(role)
+						.on(grantedRole.roleNo.eq(role.no))
+						.fetch();
+
+				return roleList.stream()
+						.map(x -> mapper.toDetails(x))
+						.collect(Collectors.toList());
+			});
+		
 	}
 
 }

@@ -1,5 +1,6 @@
 package edu.jong.spring.role.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.LockModeType;
@@ -18,4 +19,15 @@ public interface GrantedRoleRepository extends JpaRepository<GrantedRoleEntity, 
 	Optional<GrantedRoleEntity> findByIdForUpdate(
 			@Param("roleNo") long roleNo, 
 			@Param("memberNo") long memberNo);
+
+	@Lock(LockModeType.PESSIMISTIC_WRITE)
+	@Query("SELECT g FROM GrantedRoleEntity g WHERE g.roleNo = :roleNo")
+	List<GrantedRoleEntity> findAllByRoleNoForUpdate(
+			@Param("roleNo") long roleNo);
+
+	@Lock(LockModeType.PESSIMISTIC_WRITE)
+	@Query("SELECT g FROM GrantedRoleEntity g WHERE g.memberNo = :memberNo")
+	List<GrantedRoleEntity> findAllByMemberNoForUpdate(
+			@Param("memberNo") long memberNo);
+
 }

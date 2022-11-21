@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 
 import edu.jong.spring.common.constants.TableNames;
 import edu.jong.spring.domain.converter.AbstractAttributeConverter;
-import edu.jong.spring.domain.entity.BaseEntity;
+import edu.jong.spring.domain.entity.BaseTimeEntity;
 import edu.jong.spring.member.enums.Gender;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -28,7 +28,7 @@ import lombok.ToString;
 @ToString
 @Table(name = TableNames.TB_MEMBER)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberEntity extends BaseEntity {
+public class MemberEntity extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

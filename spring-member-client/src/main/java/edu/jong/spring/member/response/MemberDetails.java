@@ -2,7 +2,6 @@ package edu.jong.spring.member.response;
 
 import java.time.LocalDateTime;
 
-import edu.jong.spring.common.enums.DataState;
 import edu.jong.spring.member.enums.Gender;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -20,12 +19,12 @@ public class MemberDetails {
 
 	private long no;
 	private String username;
+	private String password;
 	private String name;
 	private Gender gender;
 	private String email;
 
 	private LocalDateTime createDateTime;
 	private LocalDateTime lastUpdateDateTime;
-	private DataState dataState;
 	
 }

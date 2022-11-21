@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 import edu.jong.spring.common.constants.Patterns;
 import edu.jong.spring.common.constants.TableNames;
 import edu.jong.spring.domain.converter.AbstractAttributeConverter;
-import edu.jong.spring.domain.entity.BaseEntity;
+import edu.jong.spring.domain.entity.BaseTimeEntity;
 import edu.jong.spring.role.enums.APIMethod;
 import edu.jong.spring.role.validate.AntPattern;
 import lombok.AccessLevel;
@@ -30,7 +30,7 @@ import lombok.ToString;
 @Entity
 @Table(name = TableNames.TB_ROLE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RoleEntity extends BaseEntity {
+public class RoleEntity extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

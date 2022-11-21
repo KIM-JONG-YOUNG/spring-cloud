@@ -7,7 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+
 import edu.jong.spring.common.constants.APIUrls;
+import edu.jong.spring.common.constants.CacheNames;
+import edu.jong.spring.redis.service.RedisService;
 import edu.jong.spring.role.client.RoleOperations;
 import edu.jong.spring.role.request.RoleAddParam;
 import edu.jong.spring.role.request.RoleModifyParam;
@@ -22,30 +26,23 @@ public class RoleController  implements RoleOperations {
 	private final RoleService service;
 	
 	@Override
-	public ResponseEntity<Void> add(RoleAddParam param) {
+	public ResponseEntity<RoleDetails> add(RoleAddParam param) {
 		return ResponseEntity.status(HttpStatus.CREATED)
-				.header(HttpHeaders.LOCATION, APIUrls.ROLES + "/" + service.add(param))
-				.build();
+				.body(service.add(param));
 	}
 
 	@Override
-	public ResponseEntity<Void> modify(long no, RoleModifyParam param) {
-		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-				.header(HttpHeaders.LOCATION, APIUrls.ROLES + "/" + service.modify(no, param))
-				.build();
-	}
-
-	@Override
-	public ResponseEntity<Void> restore(long no) {
-		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-				.header(HttpHeaders.LOCATION, APIUrls.ROLES + "/" + service.restore(no))
-				.build();
+	public ResponseEntity<RoleDetails> modify(long no, RoleModifyParam param) {
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(service.modify(no, param));
 	}
 
 	@Override
 	public ResponseEntity<Void> remove(long no) {
+		
+		service.remove(no);
+		
 		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-				.header(HttpHeaders.LOCATION, APIUrls.ROLES + "/" + service.remove(no))
 				.build();
 	}
 
@@ -63,21 +60,36 @@ public class RoleController  implements RoleOperations {
 	}
 
 	@Override
-	public ResponseEntity<Void> grant(long roleNo, long memberNo) {
+	public ResponseEntity<Void> grantToMember(long roleNo, long memberNo) {
 		
-		service.grant(roleNo, memberNo);
+		service.grantToMember(roleNo, memberNo);
 
 		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-				.header(HttpHeaders.LOCATION, APIUrls.ROLES + String.format("/%s/%s", roleNo, memberNo))
 				.build();
 	}
 
 	@Override
-	public ResponseEntity<Void> revoke(long roleNo, long memberNo) {
+	public ResponseEntity<Void> revokeToMember(long roleNo, long memberNo) {
+
+		service.revokeToMember(roleNo, memberNo);
 
 		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-				.header(HttpHeaders.LOCATION, APIUrls.ROLES + String.format("/%s/%s", roleNo, memberNo))
 				.build();
+	}
+
+	@Override
+	public ResponseEntity<Void> revokeAllToMember(long memberNo) {
+
+		service.revokeAllToMember(memberNo);
+
+		return ResponseEntity.status(HttpStatus.NO_CONTENT)
+				.build();
+	}
+
+	@Override
+	public ResponseEntity<List<RoleDetails>> getAllByMember(long memberNo) {
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(service.getAllByMember(memberNo));
 	}
 	
 }

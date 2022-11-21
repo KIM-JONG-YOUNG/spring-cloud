@@ -56,6 +56,12 @@
 			<artifactId>spring-swagger-core</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<!-- Redis Core -->
+		<dependency>
+			<groupId>edu.jong</groupId>
+			<artifactId>spring-redis-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<!-- 권한 API Client -->
 		<dependency>
 			<groupId>edu.jong</groupId>

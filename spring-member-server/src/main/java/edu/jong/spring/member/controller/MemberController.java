@@ -5,11 +5,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+
+import edu.jong.spring.common.constants.APIUrls;
+import edu.jong.spring.common.constants.CacheNames;
 import edu.jong.spring.member.client.MemberOperations;
 import edu.jong.spring.member.request.MemberJoinParam;
 import edu.jong.spring.member.request.MemberModifyParam;
 import edu.jong.spring.member.response.MemberDetails;
 import edu.jong.spring.member.service.MemberService;
+import edu.jong.spring.redis.service.RedisService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -17,32 +22,23 @@ import lombok.RequiredArgsConstructor;
 public class MemberController implements MemberOperations {
 
 	private final MemberService service;
-	
+
 	@Override
-	public ResponseEntity<Void> join(MemberJoinParam param) {
+	public ResponseEntity<MemberDetails> join(MemberJoinParam param) {
 		return ResponseEntity.status(HttpStatus.CREATED)
-				.header(HttpHeaders.LOCATION, CONTEXT_PATH + "/" + service.join(param))
-				.build();
+				.body(service.join(param));
 	}
 
 	@Override
-	public ResponseEntity<Void> modify(long no, MemberModifyParam param) {
-		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-				.header(HttpHeaders.LOCATION, CONTEXT_PATH + "/" + service.modify(no, param))
-				.build();
-	}
-
-	@Override
-	public ResponseEntity<Void> restore(long no) {
-		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-				.header(HttpHeaders.LOCATION, CONTEXT_PATH + "/" + service.restore(no))
-				.build();
+	public ResponseEntity<MemberDetails> modify(long no, MemberModifyParam param) {
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(service.modify(no, param));
 	}
 
 	@Override
 	public ResponseEntity<Void> remove(long no) {
+		service.remove(no);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-				.header(HttpHeaders.LOCATION, CONTEXT_PATH + "/" + service.remove(no))
 				.build();
 	}
 
@@ -55,7 +51,6 @@ public class MemberController implements MemberOperations {
 	@Override
 	public ResponseEntity<MemberDetails> get(String username) {
 		return ResponseEntity.status(HttpStatus.OK)
-				.header(HttpHeaders.LOCATION, CONTEXT_PATH + "/" + service.get(username))
 				.body(service.get(username));
 	}
 

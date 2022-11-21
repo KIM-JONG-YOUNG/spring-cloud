@@ -8,7 +8,7 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 import edu.jong.spring.common.constants.TableNames;
-import edu.jong.spring.domain.entity.BaseEntity;
+import edu.jong.spring.domain.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +23,7 @@ import lombok.ToString;
 @IdClass(GrantedRoleEntity.PK.class)
 @Table(name = TableNames.TB_GRANTED_ROLE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class GrantedRoleEntity extends BaseEntity {
+public class GrantedRoleEntity extends BaseTimeEntity {
 
 	@Getter
 	@Builder
