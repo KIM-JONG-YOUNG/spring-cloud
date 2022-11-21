@@ -8,29 +8,22 @@
 	<artifactId>spring-member-client</artifactId>
 
 	<dependencies>
-		<dependency>
-			<groupId>edu.jong</groupId>
-			<artifactId>spring-domain-core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		<!-- Spring WEB -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+		<!-- Spring Validation -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+		<!-- Spring Feign -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+		<!-- 공통 라이브러리 -->
 		<dependency>
 			<groupId>edu.jong</groupId>
 			<artifactId>spring-cloud-common</artifactId>
