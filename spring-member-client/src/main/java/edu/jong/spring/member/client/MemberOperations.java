@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import edu.jong.spring.member.model.MemberDetails;
-import edu.jong.spring.member.model.MemberJoinParam;
-import edu.jong.spring.member.model.MemberModifyParam;
+import edu.jong.spring.member.request.MemberJoinParam;
+import edu.jong.spring.member.request.MemberModifyParam;
+import edu.jong.spring.member.response.MemberDetails;
 
 @FeignClient("member-service")
 public interface MemberOperations {

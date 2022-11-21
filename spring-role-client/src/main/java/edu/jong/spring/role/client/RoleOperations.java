@@ -12,51 +12,50 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import edu.jong.spring.role.model.RoleAddParam;
-import edu.jong.spring.role.model.RoleDetails;
-import edu.jong.spring.role.model.RoleModifyParam;
+import edu.jong.spring.common.constants.APIUrls;
+import edu.jong.spring.role.request.RoleAddParam;
+import edu.jong.spring.role.request.RoleModifyParam;
+import edu.jong.spring.role.response.RoleDetails;
 
 @FeignClient("role-service")
 public interface RoleOperations {
 
-	public static final String CONTEXT_PATH = "/roles";
-	
 	@PostMapping(
-			value = CONTEXT_PATH,
+			value = APIUrls.ROLE_API_PREFIX,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<Void> add(
 			@RequestBody RoleAddParam param);
 	
 	@PutMapping(
-			value = CONTEXT_PATH + "/{no}", 
+			value = APIUrls.ROLE_API_PREFIX + "/{no}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<Void> modify(
 			@PathVariable("no") long no,
 			@RequestBody RoleModifyParam param);
 
-	@PostMapping(value = CONTEXT_PATH + "/{no}")
+	@PostMapping(value = APIUrls.ROLE_API_PREFIX + "/{no}")
 	ResponseEntity<Void> restore(
 			@PathVariable("no") long no);
 
-	@DeleteMapping(value = CONTEXT_PATH + "/{no}")
+	@DeleteMapping(value = APIUrls.ROLE_API_PREFIX + "/{no}")
 	ResponseEntity<Void> remove(
 			@PathVariable("no") long no);
 
-	@GetMapping(value = CONTEXT_PATH + "/{no}")
+	@GetMapping(value = APIUrls.ROLE_API_PREFIX + "/{no}")
 	ResponseEntity<RoleDetails> get(
 			@PathVariable("no") long no);
 
-	@GetMapping(value = CONTEXT_PATH)
+	@GetMapping(value = APIUrls.ROLE_API_PREFIX)
 	ResponseEntity<List<RoleDetails>> list();
  
-	@PostMapping(value = "/{roleNo}/{memberNo}")
+	@PostMapping(value = APIUrls.ROLE_API_PREFIX + "/{roleNo}/grant/{memberNo}")
 	ResponseEntity<Void> grant(
 			@PathVariable("roleNo") long roleNo,
 			@PathVariable("memberNo") long memberNo);
 	
-	@DeleteMapping(value = "/{roleNo}/{memberNo}")
+	@DeleteMapping(value = APIUrls.ROLE_API_PREFIX + "/{roleNo}/revoke/{memberNo}")
 	ResponseEntity<Void> revoke(
 			@PathVariable("roleNo") long roleNo,
 			@PathVariable("memberNo") long memberNo);

@@ -5,15 +5,16 @@ import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.jong.spring.domain.model.DataState;
+import edu.jong.spring.common.enums.DataState;
 import edu.jong.spring.member.entity.MemberEntity;
-import edu.jong.spring.member.model.MemberDetails;
-import edu.jong.spring.member.model.MemberJoinParam;
-import edu.jong.spring.member.model.MemberModifyParam;
 import edu.jong.spring.member.repository.MemberRepository;
+import edu.jong.spring.member.request.MemberJoinParam;
+import edu.jong.spring.member.request.MemberModifyParam;
+import edu.jong.spring.member.response.MemberDetails;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -22,6 +23,7 @@ public class MemberServiceImpl implements MemberService {
 
 	private final MemberMapper mapper;
 	private final MemberRepository repository;
+	private final PasswordEncoder encoder;
 	
 	@Transactional
 	@Override
@@ -30,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
 		if (repository.existsByUsername(param.getUsername()))
 			throw new EntityExistsException("동일한 계정이 존재합니다.");
 		
-		MemberEntity member = repository.save(mapper.toEntity(param));
+		MemberEntity member = repository.save(mapper.toEntity(param, encoder));
 		
 		return member.getNo();
 	}

@@ -5,9 +5,9 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.validation.annotation.Validated;
 
-import edu.jong.spring.member.model.MemberDetails;
-import edu.jong.spring.member.model.MemberJoinParam;
-import edu.jong.spring.member.model.MemberModifyParam;
+import edu.jong.spring.member.request.MemberJoinParam;
+import edu.jong.spring.member.request.MemberModifyParam;
+import edu.jong.spring.member.response.MemberDetails;
 
 @Validated
 public interface MemberService {

@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import edu.jong.spring.role.entity.GrantedRoleEntity;
-import edu.jong.spring.role.entity.RoleEntity;
 
 public interface GrantedRoleRepository extends JpaRepository<GrantedRoleEntity, GrantedRoleEntity.PK> {
 

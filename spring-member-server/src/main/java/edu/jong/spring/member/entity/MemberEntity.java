@@ -2,6 +2,7 @@ package edu.jong.spring.member.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.Converter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,8 +12,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import edu.jong.spring.domain.model.BaseEntity;
-import edu.jong.spring.member.model.Gender;
+import edu.jong.spring.common.constants.TableNames;
+import edu.jong.spring.domain.converter.AbstractAttributeConverter;
+import edu.jong.spring.domain.entity.BaseEntity;
+import edu.jong.spring.member.enums.Gender;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +26,7 @@ import lombok.ToString;
 @Entity
 @Getter
 @ToString
-@Table(name = "tb_member")
+@Table(name = TableNames.TB_MEMBER)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberEntity extends BaseEntity {
 
@@ -48,7 +51,7 @@ public class MemberEntity extends BaseEntity {
 	
 	@Setter
 	@NotNull
-	@Convert(converter = Gender.AttributeConverter.class)
+	@Convert(converter = GenderAttributeConverter.class)
 	@Column(length = 1)
 	private Gender gender;
 	
@@ -73,5 +76,11 @@ public class MemberEntity extends BaseEntity {
 		this.email = email;
 	}
 	
+	@Converter
+	public static class GenderAttributeConverter extends AbstractAttributeConverter<Gender, String> {
+		public GenderAttributeConverter() {
+			super(Gender.class, false);
+		}
+	}
 	
 }
