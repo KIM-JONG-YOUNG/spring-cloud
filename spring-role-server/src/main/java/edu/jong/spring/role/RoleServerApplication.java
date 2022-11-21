@@ -5,9 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
+import edu.jong.spring.common.constants.PackagePaths;
+
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "edu.jong.spring")
-@SpringBootApplication(scanBasePackages = "edu.jong.spring")
+@EnableFeignClients(basePackages = PackagePaths.ROOT_PATH)
+@SpringBootApplication(scanBasePackages = PackagePaths.ROOT_PATH)
 public class RoleServerApplication {
 
 	public static void main(String[] args) {

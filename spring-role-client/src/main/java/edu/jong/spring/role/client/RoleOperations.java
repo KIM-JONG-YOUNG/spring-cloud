@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import edu.jong.spring.common.constants.APIUrls;
+import edu.jong.spring.common.constants.ServiceNames;
 import edu.jong.spring.role.request.RoleAddParam;
 import edu.jong.spring.role.request.RoleModifyParam;
 import edu.jong.spring.role.response.RoleDetails;
 
-@FeignClient("role-service")
+@FeignClient(name = ServiceNames.ROLE_SERVICE)
 public interface RoleOperations {
 
 	@PostMapping(

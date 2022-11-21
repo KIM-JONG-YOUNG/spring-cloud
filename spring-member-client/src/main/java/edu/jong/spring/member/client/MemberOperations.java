@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import edu.jong.spring.common.constants.ServiceNames;
 import edu.jong.spring.member.request.MemberJoinParam;
 import edu.jong.spring.member.request.MemberModifyParam;
 import edu.jong.spring.member.response.MemberDetails;
 
-@FeignClient("member-service")
+@FeignClient(name = ServiceNames.MEMBER_SERVICE)
 public interface MemberOperations {
 
 	public static final String CONTEXT_PATH = "/members";
