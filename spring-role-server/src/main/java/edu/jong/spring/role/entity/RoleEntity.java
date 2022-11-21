@@ -45,7 +45,11 @@ public class RoleEntity extends BaseEntity {
 	@Setter
 	@NotNull
 	@Convert(converter = APIMethodAttributeConverter.class)
+<<<<<<< HEAD
 	@Column(length = 6)
+=======
+	@Column(length = 5)
+>>>>>>> branch 'master' of https://github.com/KIM-JONG-YOUNG/spring-cloud.git
 	private APIMethod accessibleMethod;
 	
 	@Setter
@@ -63,7 +67,11 @@ public class RoleEntity extends BaseEntity {
 	}
 	
 	@Converter
+<<<<<<< HEAD
 	public static class APIMethodAttributeConverter extends AbstractAttributeConverter<APIMethod, String>{
+=======
+	public class APIMethodAttributeConverter extends AbstractAttributeConverter<APIMethod, String>{
+>>>>>>> branch 'master' of https://github.com/KIM-JONG-YOUNG/spring-cloud.git
 		public APIMethodAttributeConverter() {
 			super(APIMethod.class, false);
 		}

@@ -14,9 +14,16 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import edu.jong.spring.common.constants.Packages;
+
 @Configuration
 @EnableJpaAuditing
 @EnableTransactionManagement
+<<<<<<< HEAD
+=======
+@EntityScan(basePackages = Packages.ROOT)
+@EnableJpaRepositories(basePackages = Packages.ROOT)
+>>>>>>> branch 'master' of https://github.com/KIM-JONG-YOUNG/spring-cloud.git
 public class DatabaseConfig {
 
 	@Bean  
