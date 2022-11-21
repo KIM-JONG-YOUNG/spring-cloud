@@ -5,9 +5,9 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.validation.annotation.Validated;
 
-import edu.jong.spring.role.model.RoleAddParam;
-import edu.jong.spring.role.model.RoleDetails;
-import edu.jong.spring.role.model.RoleModifyParam;
+import edu.jong.spring.role.request.RoleAddParam;
+import edu.jong.spring.role.request.RoleModifyParam;
+import edu.jong.spring.role.response.RoleDetails;
 
 @Validated
 public interface RoleService {

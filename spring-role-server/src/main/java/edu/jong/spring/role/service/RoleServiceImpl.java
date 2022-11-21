@@ -3,20 +3,19 @@ package edu.jong.spring.role.service;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.jong.spring.domain.model.DataState;
+import edu.jong.spring.common.enums.DataState;
 import edu.jong.spring.member.client.MemberOperations;
-import edu.jong.spring.member.model.MemberDetails;
+import edu.jong.spring.member.response.MemberDetails;
 import edu.jong.spring.role.entity.GrantedRoleEntity;
 import edu.jong.spring.role.entity.RoleEntity;
-import edu.jong.spring.role.model.RoleAddParam;
-import edu.jong.spring.role.model.RoleDetails;
-import edu.jong.spring.role.model.RoleModifyParam;
 import edu.jong.spring.role.repository.GrantedRoleRepository;
 import edu.jong.spring.role.repository.RoleRepository;
+import edu.jong.spring.role.request.RoleAddParam;
+import edu.jong.spring.role.request.RoleModifyParam;
+import edu.jong.spring.role.response.RoleDetails;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -34,8 +33,8 @@ public class RoleServiceImpl implements RoleService {
 
 		if (roleRepository.existsByName(param.getName()))
 			throw new EntityExistsException("동일한 권한명이 존재합니다.");
-		
 		RoleEntity role = roleRepository.save(mapper.toEntity(param));
+
 		return role.getNo();
 	}
 

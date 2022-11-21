@@ -7,10 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.jong.spring.common.constants.APIUrls;
 import edu.jong.spring.role.client.RoleOperations;
-import edu.jong.spring.role.model.RoleAddParam;
-import edu.jong.spring.role.model.RoleDetails;
-import edu.jong.spring.role.model.RoleModifyParam;
+import edu.jong.spring.role.request.RoleAddParam;
+import edu.jong.spring.role.request.RoleModifyParam;
+import edu.jong.spring.role.response.RoleDetails;
 import edu.jong.spring.role.service.RoleService;
 import lombok.RequiredArgsConstructor;
 
@@ -23,28 +24,28 @@ public class RoleController  implements RoleOperations {
 	@Override
 	public ResponseEntity<Void> add(RoleAddParam param) {
 		return ResponseEntity.status(HttpStatus.CREATED)
-				.header(HttpHeaders.LOCATION, CONTEXT_PATH + "/" + service.add(param))
+				.header(HttpHeaders.LOCATION, APIUrls.ROLES + "/" + service.add(param))
 				.build();
 	}
 
 	@Override
 	public ResponseEntity<Void> modify(long no, RoleModifyParam param) {
 		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-				.header(HttpHeaders.LOCATION, CONTEXT_PATH + "/" + service.modify(no, param))
+				.header(HttpHeaders.LOCATION, APIUrls.ROLES + "/" + service.modify(no, param))
 				.build();
 	}
 
 	@Override
 	public ResponseEntity<Void> restore(long no) {
 		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-				.header(HttpHeaders.LOCATION, CONTEXT_PATH + "/" + service.restore(no))
+				.header(HttpHeaders.LOCATION, APIUrls.ROLES + "/" + service.restore(no))
 				.build();
 	}
 
 	@Override
 	public ResponseEntity<Void> remove(long no) {
 		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-				.header(HttpHeaders.LOCATION, CONTEXT_PATH + "/" + service.remove(no))
+				.header(HttpHeaders.LOCATION, APIUrls.ROLES + "/" + service.remove(no))
 				.build();
 	}
 
@@ -67,7 +68,7 @@ public class RoleController  implements RoleOperations {
 		service.grant(roleNo, memberNo);
 
 		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-				.header(HttpHeaders.LOCATION, CONTEXT_PATH + String.format("/%s/%s", roleNo, memberNo))
+				.header(HttpHeaders.LOCATION, APIUrls.ROLES + String.format("/%s/%s", roleNo, memberNo))
 				.build();
 	}
 
@@ -75,7 +76,7 @@ public class RoleController  implements RoleOperations {
 	public ResponseEntity<Void> revoke(long roleNo, long memberNo) {
 
 		return ResponseEntity.status(HttpStatus.NO_CONTENT)
-				.header(HttpHeaders.LOCATION, CONTEXT_PATH + String.format("/%s/%s", roleNo, memberNo))
+				.header(HttpHeaders.LOCATION, APIUrls.ROLES + String.format("/%s/%s", roleNo, memberNo))
 				.build();
 	}
 	

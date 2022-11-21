@@ -2,6 +2,7 @@ package edu.jong.spring.role.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.Converter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,9 +12,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import edu.jong.spring.domain.model.BaseEntity;
-import edu.jong.spring.role.model.APIMethod;
-import edu.jong.spring.role.model.AntPattern;
+import edu.jong.spring.common.constants.Patterns;
+import edu.jong.spring.common.constants.TableNames;
+import edu.jong.spring.domain.converter.AbstractAttributeConverter;
+import edu.jong.spring.domain.entity.BaseEntity;
+import edu.jong.spring.role.enums.APIMethod;
+import edu.jong.spring.role.validate.AntPattern;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,7 +28,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
-@Table(name = "tb_role")
+@Table(name = TableNames.TB_ROLE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RoleEntity extends BaseEntity {
 
@@ -33,15 +37,15 @@ public class RoleEntity extends BaseEntity {
 	private long no;
 
 	@NotNull
-	@Pattern(regexp = "^ROLE_[A-Z]+")
+	@Pattern(regexp = Patterns.ROLE_NAME)
 	@Size(max = 30)
 	@Column(unique = true)
 	private String name;
 
 	@Setter
 	@NotNull
-	@Convert(converter = APIMethod.AttributeConverter.class)
-	@Column(length = 5)
+	@Convert(converter = APIMethodAttributeConverter.class)
+	@Column(length = 6)
 	private APIMethod accessibleMethod;
 	
 	@Setter
@@ -58,4 +62,10 @@ public class RoleEntity extends BaseEntity {
 		this.accessibleUrlPattern = accessibleUrlPattern;
 	}
 	
+	@Converter
+	public static class APIMethodAttributeConverter extends AbstractAttributeConverter<APIMethod, String>{
+		public APIMethodAttributeConverter() {
+			super(APIMethod.class, false);
+		}
+	}
 }

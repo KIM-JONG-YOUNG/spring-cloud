@@ -8,9 +8,9 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 
 import edu.jong.spring.role.entity.RoleEntity;
-import edu.jong.spring.role.model.RoleAddParam;
-import edu.jong.spring.role.model.RoleDetails;
-import edu.jong.spring.role.model.RoleModifyParam;
+import edu.jong.spring.role.request.RoleAddParam;
+import edu.jong.spring.role.request.RoleModifyParam;
+import edu.jong.spring.role.response.RoleDetails;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, 
 		unmappedTargetPolicy = ReportingPolicy.IGNORE)

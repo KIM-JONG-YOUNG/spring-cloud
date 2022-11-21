@@ -6,9 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.jong.spring.member.client.MemberOperations;
-import edu.jong.spring.member.model.MemberDetails;
-import edu.jong.spring.member.model.MemberJoinParam;
-import edu.jong.spring.member.model.MemberModifyParam;
+import edu.jong.spring.member.request.MemberJoinParam;
+import edu.jong.spring.member.request.MemberModifyParam;
+import edu.jong.spring.member.response.MemberDetails;
 import edu.jong.spring.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 
