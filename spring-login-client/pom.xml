@@ -29,6 +29,12 @@
 			<artifactId>spring-cloud-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<!-- 권한 API Client -->
+		<dependency>
+			<groupId>edu.jong</groupId>
+			<artifactId>spring-role-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

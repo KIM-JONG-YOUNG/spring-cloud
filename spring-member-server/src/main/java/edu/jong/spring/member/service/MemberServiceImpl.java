@@ -19,7 +19,6 @@ import edu.jong.spring.member.request.MemberModifyParam;
 import edu.jong.spring.member.response.MemberDetails;
 import edu.jong.spring.redis.service.RedisService;
 import edu.jong.spring.role.client.RoleOperations;
-import edu.jong.spring.role.response.RoleDetails;
 import lombok.RequiredArgsConstructor;
 
 @Service

@@ -3,13 +3,13 @@ package edu.jong.spring.login.client;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import edu.jong.spring.common.constants.HeaderNames;
 import edu.jong.spring.common.constants.ServiceNames;
+import edu.jong.spring.login.request.AccessCheckParam;
 import edu.jong.spring.login.request.LogingParam;
 import edu.jong.spring.login.response.SessionTokens;
 
@@ -25,11 +25,11 @@ public interface LoginOperations {
 	@PostMapping(value = "/logout")
 	ResponseEntity<Void> logout(
 			@RequestHeader(HeaderNames.AUTH_TOKEN) String accessToken);
-	
-	@GetMapping(value = "/check")
-	ResponseEntity<Void> check(
+	 
+	@PostMapping(value = "/check")
+	ResponseEntity<Boolean> check(
 			@RequestHeader(HeaderNames.AUTH_TOKEN) String accessToken,
-			@RequestHeader(HeaderNames.ACCESSIBLE_URL) String accessUrl);
+			@RequestBody AccessCheckParam param);
 
 	@PostMapping(value = "/refresh")
 	ResponseEntity<SessionTokens> refresh(

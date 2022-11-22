@@ -1,7 +1,7 @@
 package edu.jong.spring.login.service;
 
 import java.util.Date;
-import java.util.Optional;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -10,15 +10,19 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.AntPathMatcher;
 
-import ch.qos.logback.classic.Logger;
 import edu.jong.spring.common.constants.CacheNames;
 import edu.jong.spring.login.model.SessionDetails;
+import edu.jong.spring.login.request.AccessCheckParam;
 import edu.jong.spring.login.request.LogingParam;
 import edu.jong.spring.login.response.SessionTokens;
 import edu.jong.spring.member.client.MemberOperations;
 import edu.jong.spring.member.response.MemberDetails;
 import edu.jong.spring.redis.service.RedisService;
+import edu.jong.spring.role.client.RoleOperations;
+import edu.jong.spring.role.enums.APIMethod;
+import edu.jong.spring.role.response.RoleDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -33,8 +37,10 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginServiceImpl implements LoginService {
 
 	private final MemberOperations memberOperations;
+	private final RoleOperations roleOperations ;
 	private final RedisService redisService;
 	private final PasswordEncoder encoder;
+	private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 	
 	@Override
 	public SessionDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -153,6 +159,67 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public void logout(String accessToken) {
 		redisService.caching(CacheNames.BLACKLIST + accessToken, "logout", 600);
+	}
+
+	@Override
+	public long getMemberNoFromAccessToken(String accessToken) {
+		
+		Claims claims = null;
+		
+		try {
+			claims = Jwts.parser()
+					.setSigningKey("SECRET_KEY")
+					.parseClaimsJws(accessToken)
+					.getBody();
+		} catch (ExpiredJwtException e) {
+			claims = e.getClaims();
+		}
+		
+		return Long.parseLong(claims.getSubject());
+	}
+
+	@Override
+	public SessionTokens refreshToken(String accessToken, String refreshToken) {
+		
+		if (validateRefreshToken(accessToken, refreshToken)) {
+			
+			long memberNo = getMemberNoFromAccessToken(accessToken);
+			String newAccessToken = generateAccessToken(memberNo);
+			String newRefreshToken = generateRefreshToken(newAccessToken);
+			
+			redisService.remove(CacheNames.REFRESH_TOKEN + refreshToken);
+			
+			return SessionTokens.builder()
+					.accessToken(newAccessToken)
+					.refreshToken(newRefreshToken)
+					.build();
+		} else {
+			throw new RuntimeException("유효하지 않은 Refresh Token 입니다.");
+		}
+	}
+
+	@Override
+	public boolean checkAccessible(String accessToken, AccessCheckParam param) {
+
+		long memberNo = getMemberNoFromAccessToken(accessToken);
+		ResponseEntity<List<RoleDetails>> response = roleOperations.getAllByMember(memberNo);
+
+		if (response.getStatusCode() != HttpStatus.OK) 
+			throw new RuntimeException("권한을 조회하는데 실패했습니다.");
+
+		boolean isAccessibleMethod = false;
+		boolean isAccessibleURL = false;
+		
+		for (RoleDetails roleDetails : response.getBody()) {
+			
+			isAccessibleMethod = (roleDetails.getAccessibleMethod() == APIMethod.ALL) 
+					|| (roleDetails.getAccessibleMethod() == param.getCheckMethod());
+			isAccessibleURL = antPathMatcher.match(roleDetails.getAccessibleUrlPattern(), param.getCheckURL());
+
+			if (isAccessibleMethod && isAccessibleURL) break;
+		}
+		
+		return (isAccessibleMethod && isAccessibleURL);
 	}
 
 }

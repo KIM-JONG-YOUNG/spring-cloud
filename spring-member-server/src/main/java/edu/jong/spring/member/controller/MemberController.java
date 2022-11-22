@@ -1,20 +1,14 @@
 package edu.jong.spring.member.controller;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-
-import edu.jong.spring.common.constants.APIUrls;
-import edu.jong.spring.common.constants.CacheNames;
 import edu.jong.spring.member.client.MemberOperations;
 import edu.jong.spring.member.request.MemberJoinParam;
 import edu.jong.spring.member.request.MemberModifyParam;
 import edu.jong.spring.member.response.MemberDetails;
 import edu.jong.spring.member.service.MemberService;
-import edu.jong.spring.redis.service.RedisService;
 import lombok.RequiredArgsConstructor;
 
 @RestController

@@ -1,5 +1,5 @@
 server:
-  port: 8001
+  port: 0
 
 springdoc:
   title: Role API Document
@@ -15,6 +15,8 @@ spring:
       password: 
 
 eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${server.port}}
   client:
     register-with-eureka: true
     fetch-registry: true

@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.annotation.Validated;
 
 import edu.jong.spring.login.model.SessionDetails;
+import edu.jong.spring.login.request.AccessCheckParam;
 import edu.jong.spring.login.request.LogingParam;
 import edu.jong.spring.login.response.SessionTokens;
 
@@ -30,4 +31,10 @@ public interface LoginService extends UserDetailsService {
 
 	void logout(@NotBlank String accessToken);
 
+	long getMemberNoFromAccessToken(@NotBlank String accessToken);
+
+	SessionTokens refreshToken(@NotBlank String accessToken, @NotBlank String refreshToken);
+
+	boolean checkAccessible(@NotBlank String accessToken, @NotNull @Valid AccessCheckParam param);
+	
 }

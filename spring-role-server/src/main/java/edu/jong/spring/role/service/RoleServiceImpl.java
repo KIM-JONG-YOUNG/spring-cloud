@@ -38,8 +38,8 @@ public class RoleServiceImpl implements RoleService {
 	private final RedisService redisService;
 	
 	private final JPAQueryFactory jpaQueryFactory;
-	private final QGrantedRoleEntity grantedRole;
-	private final QRoleEntity role;
+	private final QGrantedRoleEntity grantedRole = QGrantedRoleEntity.grantedRoleEntity;
+	private final QRoleEntity role = QRoleEntity.roleEntity;
 	
 	private RoleDetails caching(RoleDetails details) {
 		
@@ -48,7 +48,7 @@ public class RoleServiceImpl implements RoleService {
 		
 		return details;
 	}
-	
+	 
 	@Transactional
 	@Override
 	public RoleDetails add(RoleAddParam param) {
